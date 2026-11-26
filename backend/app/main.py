@@ -5,12 +5,17 @@ from fastapi.middleware.cors import CORSMiddleware
 from .schemas import ResumeRequest
 from app.agent import agent 
 
+origins = [
+    "http://localhost:5173",
+    "https://careerai-resume-analyzer.vercel.app/"
+    
+    ]
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
