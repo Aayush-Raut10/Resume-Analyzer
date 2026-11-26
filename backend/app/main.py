@@ -7,7 +7,7 @@ from agent import agent
 
 origins = [
     "http://localhost:5173",
-    "https://careerai-resume-analyzer.vercel.app/"
+    "https://careerai-resume-analyzer.vercel.app"
     
     ]
 
