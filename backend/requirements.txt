@@ -95,3 +95,4 @@ uvicorn==0.54.0
 wcwidth==0.9.5
 websockets==17.4
 wrapt==2.5.2
+pypdf
