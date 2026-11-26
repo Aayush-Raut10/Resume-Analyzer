@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from pydantic_ai import Agent
 from pydantic_ai.providers.google import GoogleProvider
-from .schemas import ResumeAnalysis
+from schemas import ResumeAnalysis
 from dotenv import load_dotenv
 import os
 

@@ -2,8 +2,8 @@ from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from pypdf import PdfReader
 from io import BytesIO
 from fastapi.middleware.cors import CORSMiddleware
-from app.schemas import ResumeRequest
-from app.agent import agent 
+from schemas import ResumeRequest
+from agent import agent 
 
 origins = [
     "http://localhost:5173",
