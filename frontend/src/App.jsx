@@ -79,7 +79,7 @@ function App() {
       formData.append("job_description", jobDescription);
 
       const response = await fetch(
-        "http://127.0.0.1:8000/api/v1/analyze-resume",
+        "https://resume-analyzer-48780744.fastapicloud.dev/api/v1/analyze-resume",
         {
           method: "POST",
           body: formData,
