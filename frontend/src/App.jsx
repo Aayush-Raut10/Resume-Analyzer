@@ -88,7 +88,6 @@ function App() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log(errorData);
 
         throw new Error(
           errorData.error || "Failed to analyze resume."
