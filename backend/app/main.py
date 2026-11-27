@@ -43,7 +43,10 @@ app.add_middleware(
 
 
 @app.post("/api/v1/analyze-resume")
-@limiter.limit("1/minute")
+@limiter.limit(
+    "1/minute",
+    error_message="You have reached your resume analysis limit. Please try again after one minute."
+)
 async def analyze_resume(
     request: Request,
     resume: UploadFile = File(...),
