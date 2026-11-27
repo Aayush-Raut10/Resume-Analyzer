@@ -90,7 +90,7 @@ function App() {
         const errorData = await response.json();
 
         throw new Error(
-          errorData.detail || "Failed to analyze resume."
+          errorData.error || "Failed to analyze resume."
         );
       }
 
