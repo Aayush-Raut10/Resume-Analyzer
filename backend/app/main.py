@@ -1,9 +1,17 @@
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Request
 from pypdf import PdfReader
 from io import BytesIO
 from fastapi.middleware.cors import CORSMiddleware
 from schemas import ResumeRequest
 from agent import agent 
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+
+
+# create rate limiter
+limiter = Limiter(key_func=get_remote_address)
+
 
 origins = [
     "http://localhost:5173",
@@ -12,6 +20,17 @@ origins = [
     ]
 
 app = FastAPI()
+
+# Register rate limiter
+app.state.limiter = limiter 
+
+
+# Register exception handler
+app.add_exception_handler(
+    RateLimitExceeded,
+    _rate_limit_exceeded_handler
+)
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -24,7 +43,9 @@ app.add_middleware(
 
 
 @app.post("/api/v1/analyze-resume")
+@limiter.limit("1/minute")
 async def analyze_resume(
+    request: Request,
     resume: UploadFile = File(...),
     job_description: str = Form(...)
 ):
