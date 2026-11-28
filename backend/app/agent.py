@@ -2,19 +2,21 @@ from pydantic import BaseModel
 from pydantic_ai import Agent
 from pydantic_ai.providers.google import GoogleProvider
 from schemas import ResumeAnalysis
+from pydantic_ai.models.google import GoogleModel
+from pydantic_ai.models.fallback import FallbackModel
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 
-import os
-from pydantic_ai import Agent
-from pydantic_ai.models.google import GoogleModel
-from pydantic_ai.providers.google import GoogleProvider
 
 provider = GoogleProvider(api_key=os.getenv("GOOGLE_API_KEY"))
-model = GoogleModel("gemini-2.5-flash", provider=provider)
 
+primary_model = GoogleModel("gemini-2.5-flash", provider=provider)
+backup_model = GoogleModel("gemini-2.5-flash-lite", provider=provider)
+
+# Automatically switch to backup_model if primary_model gets a 503 error
+model = FallbackModel(primary_model, backup_model)
 
 
 agent = Agent(
